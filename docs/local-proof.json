@@ -1,0 +1,103 @@
+{
+  "checks": {
+    "unauthenticated_read_blocked": true,
+    "production_entry_point_has_no_demo_session": true,
+    "amount_limit_enforced": true,
+    "separate_reviewer_required": true,
+    "hash_verified_against_safe_contract": true,
+    "changed_recipient_invalidates_approval": true,
+    "corrected_transfer_requires_fresh_approval": true,
+    "safe_requires_two_owner_signatures": true,
+    "unrelated_receipt_rejected": true,
+    "exact_token_balance_delta": true,
+    "confirmations_enforced": true,
+    "receipt_verified_and_linked_once": true,
+    "consumed_nonce_blocks_previously_approved_export": true,
+    "revisions_and_audit_survive_restart": true
+  },
+  "chainId": 31337,
+  "safe": "0xF9DE2A4CAF32261e577078593960972c02b762E2",
+  "token": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+  "threshold": 2,
+  "supersededHash": "0x22aa4c7452d0522fd6c9cdc42fd26502ee25c488273a36b2fc9c57ace1da68f4",
+  "approval": {
+    "revision": 3,
+    "safeTxHash": "0x8af984b74f6f91521ac8858cbbf9153d691d705c6199e2570e960e2ed0f5e1a7",
+    "policyHash": "0xf412602b20ae80b7095b70a543313ff7256523b1b21339ff270acf729e47fc87",
+    "actor": "reviewer",
+    "blockNumber": "4",
+    "timestamp": "2026-11-23T10:33:45.540Z"
+  },
+  "execution": {
+    "transactionHash": "0xa0874b6fb772a4f7cd7cef786c302fb4169fdfd72f8b0707d19e92e0445e7272",
+    "blockNumber": "5",
+    "blockHash": "0xf95ebf24816e4e27ed5cdc6edcddee38329de810b6d804ab21ef4f3b6d4a4d1b",
+    "safeLogIndex": 1,
+    "transferLogIndex": 0,
+    "confirmations": "2",
+    "revision": 3,
+    "safeTxHash": "0x8af984b74f6f91521ac8858cbbf9153d691d705c6199e2570e960e2ed0f5e1a7",
+    "actor": "reviewer",
+    "timestamp": "2026-11-23T10:33:45.577Z"
+  },
+  "recipient": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+  "transferBaseUnits": "125000000",
+  "audit": [
+    {
+      "action": "executed",
+      "actor": "reviewer",
+      "timestamp": "2026-11-23T10:33:45.577Z",
+      "transactionHash": "0xa0874b6fb772a4f7cd7cef786c302fb4169fdfd72f8b0707d19e92e0445e7272",
+      "blockNumber": "5",
+      "blockHash": "0xf95ebf24816e4e27ed5cdc6edcddee38329de810b6d804ab21ef4f3b6d4a4d1b",
+      "safeLogIndex": 1,
+      "transferLogIndex": 0,
+      "confirmations": "2",
+      "revision": 3,
+      "safeTxHash": "0x8af984b74f6f91521ac8858cbbf9153d691d705c6199e2570e960e2ed0f5e1a7"
+    },
+    {
+      "action": "approved",
+      "actor": "reviewer",
+      "timestamp": "2026-11-23T10:33:45.540Z",
+      "revision": 3,
+      "safeTxHash": "0x8af984b74f6f91521ac8858cbbf9153d691d705c6199e2570e960e2ed0f5e1a7",
+      "policyHash": "0xf412602b20ae80b7095b70a543313ff7256523b1b21339ff270acf729e47fc87",
+      "blockNumber": "4"
+    },
+    {
+      "action": "revised",
+      "actor": "proposer",
+      "timestamp": "2026-11-23T10:33:45.534Z",
+      "revision": 3,
+      "safeTxHash": "0x8af984b74f6f91521ac8858cbbf9153d691d705c6199e2570e960e2ed0f5e1a7",
+      "previousHash": "0x9c07a7b29a4958332b06446cbbb99a345448185949e160dde64b57f38f19cf7c",
+      "supersededApproval": false
+    },
+    {
+      "action": "revised",
+      "actor": "proposer",
+      "timestamp": "2026-11-23T10:33:45.530Z",
+      "revision": 2,
+      "safeTxHash": "0x9c07a7b29a4958332b06446cbbb99a345448185949e160dde64b57f38f19cf7c",
+      "previousHash": "0x22aa4c7452d0522fd6c9cdc42fd26502ee25c488273a36b2fc9c57ace1da68f4",
+      "supersededApproval": true
+    },
+    {
+      "action": "approved",
+      "actor": "reviewer",
+      "timestamp": "2026-11-23T10:33:45.522Z",
+      "revision": 1,
+      "safeTxHash": "0x22aa4c7452d0522fd6c9cdc42fd26502ee25c488273a36b2fc9c57ace1da68f4",
+      "policyHash": "0xf412602b20ae80b7095b70a543313ff7256523b1b21339ff270acf729e47fc87",
+      "blockNumber": "4"
+    },
+    {
+      "action": "created",
+      "actor": "proposer",
+      "timestamp": "2026-11-23T10:33:45.501Z",
+      "revision": 1,
+      "safeTxHash": "0x22aa4c7452d0522fd6c9cdc42fd26502ee25c488273a36b2fc9c57ace1da68f4"
+    }
+  ]
+}

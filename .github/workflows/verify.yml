@@ -1,0 +1,42 @@
+name: Verify Treasury Change Control
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      - run: npm ci --no-audit --no-fund
+      - run: npm audit --audit-level=high
+      - name: Unit and HTTP tests
+        run: npm test
+      - name: Signed Safe execution on Anvil
+        run: npm run proof
+      - name: Browser workflow
+        run: |
+          npm exec -- playwright install --with-deps chromium
+          npm run test:browser
+      - name: Container build
+        run: docker build -t treasury-change-control .
+      - name: Upload proof and screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: treasury-change-control-proof
+          path: |
+            artifacts/local-proof.json
+            artifacts/desk-*.png

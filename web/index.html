@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Review, approve, and verify Safe treasury proposals.">
+  <title>Treasury Change Control</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="/" aria-label="Treasury Change Control home">
+      <span class="mark" aria-hidden="true"></span>
+      <span>Treasury Change Control</span>
+    </a>
+    <div id="session" class="session" hidden>
+      <span id="network" class="network"></span>
+      <label id="role-control" hidden><span class="sr">Switch demo role</span>
+        <select id="role"><option value="proposer">Proposer</option><option value="reviewer">Reviewer</option></select>
+      </label>
+      <span id="role-name"></span>
+      <button id="logout" class="on-dark" type="button" hidden>Sign out</button>
+    </div>
+  </header>
+
+  <section id="signin" class="signin" hidden>
+    <h1>Open the treasury desk</h1>
+    <p>Sign in with your proposer or reviewer token.</p>
+    <form id="signin-form">
+      <label for="workspace-token">Workspace token</label>
+      <input type="password" id="workspace-token" required maxlength="256" autocomplete="off">
+      <button class="primary" type="submit">Sign in</button>
+    </form>
+    <p class="error" id="signin-error" role="alert" hidden></p>
+  </section>
+
+  <main id="workspace" class="workspace" hidden>
+    <header class="page-head">
+      <div><h1>Treasury proposals</h1><p id="safe-address" class="mono"></p></div>
+      <div class="head-actions">
+        <button id="refresh" class="secondary" type="button">Refresh</button>
+        <button id="add" class="primary" type="button" hidden>New proposal</button>
+      </div>
+    </header>
+    <section class="summary" aria-label="Safe overview">
+      <div><span>Safe nonce</span><strong id="safe-nonce">—</strong></div>
+      <div><span>Owner threshold</span><strong id="safe-threshold">—</strong></div>
+      <div><span>Policy</span><strong id="policy-hash" class="mono"></strong></div>
+      <div><span>RPC connection</span><strong id="health">Checking</strong></div>
+    </section>
+
+    <p id="error" class="error" role="alert" hidden></p>
+    <p id="notice" class="notice" role="status" hidden></p>
+    <div class="desk">
+      <aside class="queue" aria-labelledby="queue-title">
+        <header class="queue-head"><h2 id="queue-title">Proposal queue</h2>
+          <label><span class="sr">Filter proposals</span>
+            <select id="filter"><option value="all">All</option><option value="in_review">In review</option><option value="approved">Approved</option><option value="blocked">Policy blocked</option><option value="executed">Executed</option><option value="stale_policy">Policy changed</option></select>
+          </label>
+        </header>
+        <ul id="queue"></ul>
+        <p id="none" class="empty" hidden>No proposals match.</p>
+      </aside>
+
+      <section id="empty" class="detail empty"><h2>Select a proposal</h2><p>Review its transfer, policy checks, and audit trail.</p></section>
+      <section id="detail" class="detail" aria-labelledby="proposal-title" hidden>
+        <header class="proposal-head">
+          <div class="proposal-top"><span id="revision" class="revision"></span><span id="status" class="badge"></span></div>
+          <h2 id="proposal-title"></h2>
+          <p id="transfer-amount" class="amount"></p>
+          <dl class="facts" id="facts"></dl>
+        </header>
+        <div id="proposal-actions" class="proposal-actions"></div>
+        <nav class="tabs" aria-label="Proposal sections">
+          <button type="button" data-panel="review" aria-current="page">Policy checks</button>
+          <button type="button" data-panel="payload">Transaction</button>
+          <button type="button" data-panel="audit">Audit trail</button>
+        </nav>
+        <section class="panel" id="panel-review">
+          <div class="panel-heading"><h3>Policy checks</h3><p id="review-description"></p></div>
+          <ul id="checks" class="checks"></ul>
+          <div id="execution-card" class="execution" hidden></div>
+        </section>
+        <section class="panel" id="panel-payload" hidden>
+          <div class="panel-heading"><h3>Safe transaction</h3><p>Approval applies to this hash and revision.</p></div>
+          <pre id="payload"></pre>
+        </section>
+        <section class="panel" id="panel-audit" hidden>
+          <div class="panel-heading"><h3>Audit trail</h3></div>
+          <ol id="audit" class="activity"></ol>
+          <div class="panel-heading previous"><h3>Revisions</h3></div>
+          <ol id="history" class="activity"></ol>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="proposal-dialog" aria-labelledby="editor-title">
+    <form id="editor" class="editor">
+      <header><h2 id="editor-title">New proposal</h2><button class="secondary" type="button" data-close="proposal-dialog">Close</button></header>
+      <label>Title<input name="title" required maxlength="100" placeholder="Vendor settlement"></label>
+      <label>Input type<select name="mode" id="input-type"><option value="transfer">ERC-20 transfer</option><option value="raw">Import Safe JSON</option></select></label>
+      <fieldset id="transfer-fields">
+        <label>Token<select name="token" required></select></label>
+        <label>Recipient address<input name="recipient" required minlength="42" maxlength="42" spellcheck="false"></label>
+        <div class="input-pair">
+          <label>Amount in base units<input name="amount" required pattern="[0-9]+" maxlength="78" inputmode="numeric"></label>
+          <label>Safe nonce<input name="nonce" required pattern="[0-9]+" maxlength="78" inputmode="numeric"></label>
+        </div>
+        <p id="transfer-help"></p>
+      </fieldset>
+      <label id="raw-wrap" hidden>Safe transaction JSON<textarea name="raw" rows="10" spellcheck="false" maxlength="14000"></textarea></label>
+      <p id="editor-error" class="error" role="alert" hidden></p>
+      <footer><button class="primary" type="submit">Save proposal</button></footer>
+    </form>
+  </dialog>
+
+  <dialog id="receipt-dialog" aria-labelledby="receipt-title">
+    <form id="receipt-form" class="editor">
+      <header><h2 id="receipt-title">Verify execution</h2><button class="secondary" type="button" data-close="receipt-dialog">Close</button></header>
+      <p>Paste the transaction hash after Safe owners have executed the approved transfer.</p>
+      <label>Execution transaction hash<input name="transactionHash" required minlength="66" maxlength="66" spellcheck="false"></label>
+      <p id="receipt-error" class="error" role="alert" hidden></p>
+      <footer><button class="primary" type="submit">Verify receipt</button></footer>
+    </form>
+  </dialog>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "chainId": 11155111,
+  "safe": "0x0000000000000000000000000000000000000003",
+  "rpcUrl": "https://ethereum-sepolia-rpc.publicnode.com",
+  "confirmations": 3,
+  "tokens": [
+    {
+      "address": "0x0000000000000000000000000000000000000004",
+      "symbol": "TEST",
+      "decimals": 6,
+      "limit": "250000000",
+      "recipients": ["0x0000000000000000000000000000000000000005"]
+    }
+  ]
+}
