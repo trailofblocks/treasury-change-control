@@ -2,6 +2,17 @@
 
 A review desk for ERC-20 transfers from Safe v1.4.1. Draft or import a proposal, inspect its decoded transaction, apply treasury policy, and approve the exact Safe hash. After the Safe owners execute that transaction, the reviewer can attach a verified on-chain receipt.
 
+<!-- portfolio-demo-videos -->
+## Watch the demo
+
+Use it before a team approves a shared digital wallet transfer. The walkthrough has on-screen captions.
+
+![Captioned Treasury Change Control walkthrough](docs/demo/how-to.gif)
+
+[Download the narrated walkthrough](docs/demo/how-to.mp4?raw=true) · [Download the narrated overview](docs/demo/overview.mp4?raw=true)
+
+<!-- /portfolio-demo-videos -->
+
 [Review console screenshot](docs/desk-executed.png) · [Local Safe execution proof](docs/local-proof.json) · [Sepolia hash comparison](docs/sepolia-hash-check.json)
 
 ## Run the demo
